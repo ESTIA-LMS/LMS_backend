@@ -31,3 +31,16 @@ node_modules/.bin/sequelize-auto -h mssql_service -d BASKOI_LMS -u SA -x Motdepa
 
 **************** GIT **************
 
+git init
+
+git add .
+
+git commit
+
+git branch <nomdelabranche>
+
+git remote add  <shortname> <url>
+
+git push <remote> <branch>
+
+download ----->    git pull <remote> <branch>
