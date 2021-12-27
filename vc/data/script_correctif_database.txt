@@ -1,0 +1,127 @@
+USE Master
+GO
+
+USE BASKOI_LMS
+GO
+
+--Create all Tables
+BEGIN TRY
+
+	BEGIN TRANSACTION
+
+		//Recreer la table sans le è
+		IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.Cours_Matières'))
+			BEGIN
+				DROP TABLE Cours_Matières
+				--Create table of Cours_Matieres
+				CREATE TABLE dbo.Cours_Matieres
+				(
+					CM_Id INT IDENTITY(1,1) NOT NULL,		--AutoIncrément
+					CM_Cours_Id INT NOT NULL,
+					CM_Matieres_Id INT NOT NULL,
+					CM_Description NVARCHAR(255) DEFAULT '' NULL,
+					CM_Create_Date DATETIME DEFAULT GETDATE(),
+					CM_Update_Date DATETIME DEFAULT GETDATE(),
+					PRIMARY KEY (CM_Id),				--Primary Key (unique)
+					CONSTRAINT FK_Cours FOREIGN KEY (CM_Cours_Id)		--Foreign key on CM_Cours_Id
+					REFERENCES Cours(Cours_Id),							--Link on table Cours
+					CONSTRAINT FK_Matieres FOREIGN KEY (CM_Matieres_Id)		--Foreign key on CM_Matieres_Id
+					REFERENCES Matieres(Matieres_Id)						--Link on table Matieres
+				);
+				
+				--Insert into table 'Cours_Matieres' some default record
+				INSERT INTO dbo.Cours_Matieres 
+				(CM_Cours_Id, CM_Matieres_Id)
+				VALUES
+				(1, 1);
+				
+				INSERT INTO dbo.Cours_Matieres 
+				(CM_Cours_Id, CM_Matieres_Id)
+				VALUES
+				(2, 1);
+				
+				INSERT INTO dbo.Cours_Matieres 
+				(CM_Cours_Id, CM_Matieres_Id)
+				VALUES
+				(3, 3);
+				
+				INSERT INTO dbo.Cours_Matieres 
+				(CM_Cours_Id, CM_Matieres_Id)
+				VALUES
+				(3, 2);
+				
+			END	
+			
+		IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.Type_Eval'))
+			BEGIN
+				--Create table of Type_Eval
+				CREATE TABLE dbo.Type_Eval
+				(
+					Type_Eval_Id INT IDENTITY(1,1) NOT NULL,		--AutoIncrément
+					Type_Eval_Nom NVARCHAR(100),
+					Type_Eval_Description NVARCHAR(255) DEFAULT '',
+					Type_Eval_Create_Date DATETIME DEFAULT GETDATE(),
+					Type_Eval_Update_Date DATETIME DEFAULT GETDATE(),
+					PRIMARY KEY (Type_Eval_Id)				--Primary Key (unique)
+				);
+				
+				--Insert into table 'Matieres' some default record
+				INSERT INTO dbo.Type_Eval 
+				(Type_Eval_Nom, Type_Eval_Description)
+				VALUES
+				('Evaluation Test', 'Evaluation Test dont les notes ne servent qu''à entrainer');
+				
+				INSERT INTO dbo.Type_Eval 
+				(Type_Eval_Nom, Type_Eval_Description)
+				VALUES
+				('Evaluation Nationale', 'Evaluation Nationale avec rapport auprès de l''état');
+
+			END
+		
+		//Creer table supp oubliée
+		IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.Users_Matieres'))
+			BEGIN
+				--DROP TABLE dbo.Users_Matieres
+				
+			CREATE TABLE dbo.Users_Matieres
+			(
+				UM_Id INT IDENTITY(1,1) NOT NULL,		
+				UM_Users_Id INT NOT NULL,
+				UM_Matieres_Id INT NOT NULL,
+				UM_Inscription_Date DATETIME DEFAULT GETDATE(),
+				UM_Last_Consultation_Date DATETIME DEFAULT GETDATE(),
+				UM_Avancement DECIMAL(5,2) DEFAULT 0,
+				PRIMARY KEY (UM_Id),				
+				CONSTRAINT FK_Users_Users_Id FOREIGN KEY (UM_Users_Id) REFERENCES Users(Users_Id),								
+				CONSTRAINT FK_Matieres_Matieres_Id FOREIGN KEY (UM_Matieres_Id)	REFERENCES Matieres(Matieres_Id)								
+			);
+			
+			--Insert into table 'Users_Matieres' some default record
+			INSERT INTO dbo.Users_Matieres 
+			(UM_Users_Id, UM_Matieres_Id )
+			VALUES
+			(1, 1);
+			
+							
+			END	
+			
+	COMMIT TRANSACTION
+	
+END TRY
+BEGIN CATCH
+	
+	DECLARE @ErrorMessage NVARCHAR(4000);  
+    DECLARE @ErrorSeverity INT;  
+    DECLARE @ErrorState INT;  
+  
+    SELECT   
+        @ErrorMessage = ERROR_MESSAGE(),  
+        @ErrorSeverity = ERROR_SEVERITY(),  
+        @ErrorState = ERROR_STATE();  
+
+    RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+			   
+	ROLLBACK TRANSACTION
+
+END CATCH
+GO

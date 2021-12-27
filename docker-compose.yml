@@ -1,0 +1,39 @@
+version: '3.4'
+
+networks:
+  backend:
+
+services:
+  # DB
+  mssql_service:
+    container_name: mssql_container
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433 #expose: 1433 pour fermer depuis l'exterieur du docker network
+    volumes:
+      - ./vc/data:/var/opt/mssql/data
+    environment:
+      - SA_PASSWORD=Motdepasseconforme64
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+    networks:
+      - backend
+
+  # API server
+  api:
+    container_name: api_container
+    build:
+      context: .
+      dockerfile: ./Dockerfile-api
+    networks:
+      - backend
+    volumes:
+      - ./api:/usr/app/
+    environment:
+      - SQL_SERVER=mssql
+    command: bash
+    tty: true
+    ports:
+      - "64320:64320"
+    depends_on:
+      - mssql_service
