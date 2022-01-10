@@ -15,7 +15,8 @@ const model = sequelize.define('Users', {
       references: {
         model: 'Profils',
         key: 'Profils_Id'
-      }
+      },
+      defaultValue: 1
     },
     Users_Nom: {
       type: DataTypes.STRING(100),
@@ -30,7 +31,7 @@ const model = sequelize.define('Users', {
       allowNull: true
     },
     Users_Pwd: {
-      type: DataTypes.BLOB,
+      type: DataTypes.STRING(500),
       allowNull: true
     },
     Users_Create_Date: {

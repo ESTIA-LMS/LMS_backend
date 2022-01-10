@@ -54,7 +54,7 @@ BEGIN TRY
 					Users_Nom NVARCHAR(100),
 					Users_Prenom NVARCHAR(100),
 					Users_Email NVARCHAR(255),
-					Users_Pwd BINARY(64),					--Special type for 'password'
+					Users_Pwd NVARCHAR(500),					--Special type for 'password'
 					Users_Create_Date DATETIME DEFAULT GETDATE(),
 					Users_Update_Date DATETIME DEFAULT GETDATE(),
 					Users_Actif BIT,

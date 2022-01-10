@@ -9,7 +9,7 @@ BEGIN TRY
 
 	BEGIN TRANSACTION
 
-		//Recreer la table sans le è
+		--Recreer la table sans le è
 		IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.Cours_Matières'))
 			BEGIN
 				DROP TABLE Cours_Matières
@@ -78,7 +78,7 @@ BEGIN TRY
 
 			END
 		
-		//Creer table supp oubliée
+		--creer table supp oubliée
 		IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'dbo.Users_Matieres'))
 			BEGIN
 				--DROP TABLE dbo.Users_Matieres

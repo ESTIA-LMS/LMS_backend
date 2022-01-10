@@ -44,3 +44,5 @@ git remote add  <shortname> <url>
 git push <remote> <branch>
 
 download ----->    git pull <remote> <branch>
+
+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

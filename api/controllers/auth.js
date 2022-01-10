@@ -2,7 +2,6 @@
 const httpError = require('http-errors')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN)
 
 const User = require('../models/users');
 const ctrl = {}
@@ -28,7 +27,7 @@ ctrl.login = function login(req,res,next){
 
             //vérf user existe avec ce mail
             if(user === null){
-                return res.status(401).json({message: `Ce munéro de téléphone n'est associé à aucun employé sur GX`})
+                return res.status(401).json({message: `Email n'existe pas`})
             }
 
 
@@ -42,15 +41,14 @@ ctrl.login = function login(req,res,next){
 
                     //Si test ok alros génération du token
                     const token = jwt.sign({
-                        id: user.n_itc,
-                        nom: user.Nom_commercial,
-                        premom: user.Prenom,
-                        phone: user.Users_Pwd
+                        id: user.Users_Id,
+                        nom: user.Users_Nom,
+                        premom: user.Users_Prenom
                     }, process.env.JWT_PHRASE_SECRETE, {expiresIn: '12 hour'})
 
                     return res.json({access_token: token})
                 })
-                .catch(err => res.status(500).json({message: 'La vérification du mot de passe a échoué'}))
+                .catch(next)
         })
         .catch(err => res.status(500).json({message: `Le processus de connexion a échoué`}))
 }
@@ -86,7 +84,7 @@ ctrl.updateMdp = function updateMdp(req,res,next){
 
             //vérf employé existe avec ce num
             if(user === null){
-                return res.status(401).json({message: `Cet employé n'existe pas`})
+                return res.status(401).json({message: `Cet utilisateur n'existe pas`})
             }
             
             //Si existe alors hashage puis mdp update
