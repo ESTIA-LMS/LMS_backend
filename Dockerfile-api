@@ -11,3 +11,5 @@ USER node
 
 # Install global dependencies
 RUN npm i -g nodemon
+
+CMD ["npm", "run", "dev"]

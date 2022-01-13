@@ -31,9 +31,10 @@ services:
       - ./api:/usr/app/
     environment:
       - SQL_SERVER=mssql
-    command: bash
     tty: true
     ports:
       - "64320:64320"
+    entrypoint:
+      - /bin/bash
     depends_on:
       - mssql_service
