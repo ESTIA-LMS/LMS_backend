@@ -24,7 +24,7 @@ services:
     container_name: api_container
     build:
       context: .
-      dockerfile: ./Dockerfile-api
+      dockerfile: ./Dockerfile
     networks:
       - backend
     volumes:
@@ -34,7 +34,6 @@ services:
     tty: true
     ports:
       - "64320:64320"
-    entrypoint:
-      - /bin/bash
+    command: ./wait-for-it.sh -t 60 --strict mssql_service:1433 -- ./start.sh
     depends_on:
       - mssql_service
