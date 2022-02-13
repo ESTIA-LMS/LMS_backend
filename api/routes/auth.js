@@ -2,13 +2,12 @@
 
 const api = require('express')
 let router   = api.Router()
-let Ctrl = require('../controllers/auth')
+let ctrl = require('../controllers/auth')
 
 
 /*Routage de la ressource*/
 
-router.post('/', Ctrl.login)
-router.patch('/', Ctrl.updateMdp)
-
+router.post('/', ctrl.login)
+router.patch('/:id', ctrl.updateMdp)
 
 module.exports = router

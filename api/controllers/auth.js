@@ -43,7 +43,7 @@ ctrl.login = function login(req,res,next){
                     const token = jwt.sign({
                         id: user.Users_Id,
                         nom: user.Users_Nom,
-                        premom: user.Users_Prenom
+                        prenom: user.Users_Prenom
                     }, process.env.JWT_PHRASE_SECRETE, {expiresIn: '12 hour'})
 
                     return res.json({access_token: token})
@@ -55,51 +55,51 @@ ctrl.login = function login(req,res,next){
 
 
 /**
-* Update mdp.
-*
-* @param  {Request}  req
-* @param  {Response} res
-* @param  {function} next
-*/
-ctrl.updateMdp = function updateMdp(req,res,next){
+ * Update password of an user.
+ *
+ * @param  {Request}  req
+ * @param  {Response} res
+ * @param  {function} next
+ */
+ ctrl.updateMdp = function update(req, res, next) {
 
-    let {email, mdp1, mdp2} = req.body
-
-    //vérif du numéro
-    if(!email){
-        throw next(httpError(400, 'Veuillez renseigner un numéro de téléphone')) 
-    }
+    const id = req.params.id
+    const {oldPwd, newPwd, newPwdConf} = req.body
+  
+    if (!Number(id)) return res.status(400).json({message:'On est mal barré'})
+  
     //verif mdp identiques
-    if(mdp1 !== mdp2){
-        throw next(httpError(400, 'les mots de passe ne sont pas identiques')) 
-    }
+    if(newPwd !== newPwdConf) return res.status(400).json({message:'les mots de passe ne sont pas identiques'})
+  
     //verif conforme rgpd
-    if(mdp1.length<9){
-        throw next(httpError(400, 'Veuillez saisir un mdp de plus de 9 charactère')) 
-    }
+    if(newPwd.length<=6)  return res.status(400).json({message:`Veuillez saisir un mdp d'au moins 6 charactère`})
+  
+    //Cherche user
+    User.findOne({where:{Users_Id: id}, raw: true})
+    .then(user => {
+  
+        //vérf user existe avec ce num
+        if(user === null) return res.status(401).json({message: `Cet utilisateur n'existe pas`})
+  
+        //verif old mdp
+        bcrypt.compare(oldPwd, user.Users_Pwd)
+        .then(match => {
 
-    //Cherche employé
-    User.findOne({where:{Users_Pwd: email}, raw: true})
-        .then(user => {
-
-            //vérf employé existe avec ce num
-            if(user === null){
-                return res.status(401).json({message: `Cet utilisateur n'existe pas`})
-            }
-            
-            //Si existe alors hashage puis mdp update
-            bcrypt.hash(mdp1, 10)
-                .then(hash => {
-
-                    //Update le mdp
-                    user.update({Users_Pwd: hash}, {where:{Users_Email: email}, raw: true})
-                        .then(user => res.status(200).json({message : 'Mdp mis à jour'}))
-                        .catch(err => res.status(500).json({message : 'erreur update mdp'}))
-                })
-                .catch(err => res.status(500).json({message:'Erreur interne'}))
-
+          if(!match) return res.status(401).json({message: `Ancien mot de passe ne correspond pas.`})
+                    
+          //Si ok alors hashage puis mdp update
+          bcrypt.hash(newPwd, 10)
+              .then(hash => {
+                  //Update le mdp
+                  User.update({Users_Pwd: hash}, {where:{Users_Id: id}, raw: true})
+                      .then(user => res.status(200).json({message : 'Mdp mis à jour'}))
+                      .catch(err => res.status(500).json({message : 'erreur update mdp'}))
+              })
+              .catch(err => res.status(500).json({message: 'Erreur hashage'}))
         })
-        .catch(err => res.status(401).json({message: `Erreur`}))
+        .catch(err => res.status(500).json({message: 'Erreur comparaison'}))
+    })
+    .catch(err => res.status(401).json({message: 'Erreur recherche utilisateur'}))
 }
 
 

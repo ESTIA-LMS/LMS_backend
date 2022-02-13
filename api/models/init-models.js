@@ -15,10 +15,10 @@ function initModels() {
 
   //Profil user 1 n
   Users.belongsTo(Profil)
-  Profil.hasMany(Users, {foreignKey: "Users_Id"})
+  Profil.hasMany(Users, {foreignKey: "Profils_Id"})
   // User User_Matiere 1 n
   Users_Matieres.belongsTo(Users);
-  Users.hasMany(Users_Matieres, {foreignKey: "UM_Users_Id"});
+  Users.hasMany(Users_Matieres, {foreignKey: "UM_Users_Id"})
   // User_Matiere Matiere 1 n
   Users_Matieres.belongsTo(Matieres)
   Matieres.hasMany(Users_Matieres, {foreignKey: "UM_Matieres_Id"})

@@ -24,6 +24,7 @@ ctrl.getAll = function getAll(req, res, next) {
  
 }
 
+
 /**
  * Create a new user.
  *
@@ -31,11 +32,11 @@ ctrl.getAll = function getAll(req, res, next) {
  * @param  {Response} res
  * @param  {function} next
  */
-ctrl.create = function create(req, res, next) {
+ ctrl.create = function create(req, res, next) {
 
   let {nom, prenom, email, mdp, mdp1} = req.body
 
-  if (mdp !== mdp1) throw httpError(400, 'Password are not equals')
+  if (mdp !== mdp1) return res.status(401).json({message: 'Les mots de passe ne sont pas identiques'})
 
   User.findOne({where:{Users_Email : email}, raw: true})
   .then(user => {
@@ -50,8 +51,7 @@ ctrl.create = function create(req, res, next) {
         User
         .create({Users_Nom: nom, Users_Prenom: prenom, Users_Email: email, Users_Pwd: hash })
         .then(user => {
-          console.log(hash)
-          return res.status(201).send(user)
+          return res.status(201).json({user: user})
         })
         .catch(next)
       })
@@ -60,26 +60,6 @@ ctrl.create = function create(req, res, next) {
   .catch(next) 
 }
 
-/**
- * Update an user.
- *
- * @param  {Request}  req
- * @param  {Response} res
- * @param  {function} next
- */
-ctrl.update = function update(req, res, next) {
-  User
-    .findOneAndUpdate({Users_id: req.params.id}, req.body, {new: true})
-    .then(function(user) {
-      if (user) {
-        return res.status(200).send(user)
-      }
-
-      throw httpError(404, 'Cannot find user: ' + req.params.id)
-    })
-    .catch(next)
-  
-}
 
 /**
  * Remove a given user.
@@ -88,14 +68,22 @@ ctrl.update = function update(req, res, next) {
  * @param  {Response} res
  * @param  {function} next
  */
-ctrl.destroy = function destroy(req, res, next) {
-  User
-    .findOneAndRemove({Users_id: req.params.id})
-    .then(function(user) {
-      return res.status(200).send(user)
-    })
-    .catch(next)
-  
+ctrl.destroy = async function destroy(req, res, next) {
+
+    // Vérification de l'id utilisateur
+    const id = parseInt(req.params.id)
+    if(!id){
+        return res.status(400).json({message:'Manque id!'})
+    }
+    
+    // Suppression définitive de l'utilisateur
+    try {
+        const data = await User.destroy({where:{Users_Id: id}, force: true})
+        return res.status(200).json({message: 'Utilisateur supprimé', data: data })
+
+    } catch (err) {
+        return res.status(500).json({message: err})
+    }     
 }
 
 /**
@@ -107,8 +95,8 @@ ctrl.destroy = function destroy(req, res, next) {
  */
 ctrl.getOne = function getOne(req, res, next) {
   User
-    .findById(req.params.id)
-    .then(function(user) {
+    .findByPk(req.params.id)
+    .then(user => {
       if (user) {
         return res.status(200).send(user)
       }
