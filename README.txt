@@ -15,6 +15,11 @@ docker exec mssql_service "bash"
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64 -i /var/opt/mssql/data/script_create_database.txt
 
 3) Si OK alors on peut quitter et lancer le docker compose (host / terminal 1)-
+
+build image et test du container api
+docker build ./api -t back_api:v1 --no-cache       
+docker run --name api -it --rm back_api:v1 /bin/bash
+
 docker-compose up -d
 docker-compose down
 

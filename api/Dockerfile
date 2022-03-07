@@ -7,10 +7,13 @@ RUN echo $TIME_ZONE | tee /etc/timezone \
 
 WORKDIR /usr/app
 
-COPY ./ ./
+COPY ["package.json", "./"]
 
 # Install global dependencies
 RUN npm install 
 
-#CMD ["/bin/sh", "-c", "./start.sh"]
+RUN npm audit fix
+
+COPY ./ ./
+
 

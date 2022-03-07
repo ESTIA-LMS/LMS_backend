@@ -3,12 +3,12 @@
 const httpError = require('http-errors')
 const bcrypt = require('bcrypt')
 const { QueryTypes } = require('sequelize')
-const User = require('../models/users')
+const User = require('../models/Users')
 
 const ctrl = {}
 
 /**
- * Display all users.
+ * Display all users. 
  *
  * @param  {Request}  req
  * @param  {Response} res

@@ -22,9 +22,10 @@ services:
   # API server
   api:
     container_name: api_container
-    build:
-      context: .
-      dockerfile: ./Dockerfile
+    #build:
+    #  context: ./api
+    #  dockerfile: ./Dockerfile
+    image: back_api:v1
     networks:
       - backend
     volumes:
