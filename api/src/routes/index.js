@@ -7,7 +7,7 @@ const userRtr = require('./users')
 const authRtr = require('./auth')
 
 
-app.get('/',(req,res,next) => res.send('Bonjour et bienvenue'))
+app.get('/',(req,res,next) => res.status(200).send('Bonjour et bienvenue'))
 
 app.use('/auth', authRtr)
 app.use('/users', userRtr)

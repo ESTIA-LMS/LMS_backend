@@ -32,6 +32,8 @@ docker run --rm --name back_api -it back_api /bin/bash
 docker-compose up -d
 docker-compose down
 
+docker-compose exec api_service bash 
+
 
 **************** GIT **************
 
@@ -50,3 +52,13 @@ git push <remote> <branch>
 download ----->    git pull baptiste_back main
 
 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
+
+
+
+----------------TESTS---------------------
+
+-> run tout les test dans le dossier test
+npm test 
+
+-> run un fichier test spécifique (nécessite chemin vers node module)
+./node_modules/mocha/bin/mocha test/connexion

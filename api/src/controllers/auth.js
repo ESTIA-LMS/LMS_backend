@@ -46,7 +46,7 @@ ctrl.login = function login(req,res,next){
                         prenom: user.Users_Prenom
                     }, process.env.JWT_PHRASE_SECRETE, {expiresIn: '365 days'})
 
-                    return res.json({access_token: token})
+                    return res.status(200).json({access_token: token})
                 })
                 .catch(next)
         })

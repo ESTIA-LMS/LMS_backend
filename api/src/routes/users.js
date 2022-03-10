@@ -3,7 +3,7 @@
 const api = require('express')
 
 const userCtrl = require('../controllers/users')
-const jwtmiddleware = require('../middelwares/jwt_token')
+const jwtmiddleware = require('../middlewares/jwt_token')
 
 let router   = api.Router()
 
