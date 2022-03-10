@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config server.js",
-    "dev": "nodemon -L -r dotenv/config server.js"
+    "start": "node -r dotenv/config src/server.js",
+    "dev": "nodemon -L -r dotenv/config src/server.js"
   },
   "keywords": [],
   "author": "Baptiste Duboué",
   "license": "ISC",
+  
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
@@ -21,7 +22,9 @@
     "sequelize": "^6.7.0",
     "sequelize-auto": "^0.8.5",
     "tedious": "^14.0.0",
-    "unit.js": "^2.1.1",
-    "nodemon": "^2.0.15"
+    "unit.js": "^2.1.1"},
+
+    "devDependencies": {
+      "nodemon": "^2.0.15"
+    }
   }
-}

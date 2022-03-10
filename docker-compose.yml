@@ -11,7 +11,7 @@ services:
     ports:
       - 1433:1433 #expose: 1433 pour fermer depuis l'exterieur du docker network
     volumes:
-      - ./vc/data:/var/opt/mssql/data
+      - ./data:/var/opt/mssql/data
     environment:
       - SA_PASSWORD=Motdepasseconforme64
       - ACCEPT_EULA=Y

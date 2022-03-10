@@ -12,17 +12,18 @@ docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=motdepasse' -p 1433:1433 -d mcr.mi
 -> entre dans le container
 docker exec mssql_service "bash"
 
-->copie du script dans le volume vc/data
-
--> execute le script de création de la base
+-> dans le conatiner execute le script de création de la base si besoin 
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64 -i /var/opt/mssql/data/script_create_database.txt
 
 
 
 2) Image API nodejs
 
-build image et test du container api
+build image 
 docker build ./ -t back_api --no-cache       
+
+Test du container (attention le container ne contient pour le moment que les dépendances et pas le code source du projet)
+docker run --rm --name back_api -it back_api /bin/bash
 
 
 
@@ -46,6 +47,6 @@ git remote add  <shortname> <url>
 
 git push <remote> <branch>
 
-download ----->    git pull <remote> <branch>
+download ----->    git pull baptiste_back main
 
 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

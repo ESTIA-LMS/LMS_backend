@@ -14,6 +14,8 @@ RUN npm install
 
 RUN npm audit fix
 
+RUN npm install --only=dev
+
 COPY ./ ./
 
 

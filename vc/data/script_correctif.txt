@@ -1,6 +1,0 @@
-USE Master
-GO
-
-    DROP DATABASE BASKOI_LMS;
-
-			
