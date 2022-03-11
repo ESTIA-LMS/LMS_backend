@@ -51,7 +51,7 @@ ctrl.getAll = function getAll(req, res, next) {
         User
         .create({Users_Nom: nom, Users_Prenom: prenom, Users_Email: email, Users_Pwd: hash })
         .then(user => {
-          return res.status(201).json({user: user})
+          return res.status(201).json({message: `L'utilisateur ${user.Users_Prenom} ${user.Users_Nom} a bien été créé`})
         })
         .catch(next)
       })
@@ -95,7 +95,7 @@ ctrl.destroy = async function destroy(req, res, next) {
  */
 ctrl.getOne = function getOne(req, res, next) {
   User
-    .findByPk(req.params.id)
+    .findOne({where:{Users_Id : req.params.id}, raw: true})
     .then(user => {
       if (user) {
         return res.status(200).send(user)
