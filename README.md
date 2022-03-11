@@ -37,4 +37,3 @@ npm test
 
 -> run un fichier test spécifique (nécessite chemin vers node module)
 ./node_modules/mocha/bin/mocha test/connexion
-
