@@ -1,6 +1,6 @@
 #/bin/sh
 docker run --rm -d --name mssql \
---user root
+--user root \
 --network lms_network \
 -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Motdepasseconforme64' -e 'MSSQL_PID=Express' \
 -p 1433:1433 \
