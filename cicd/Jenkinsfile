@@ -14,13 +14,12 @@ pipeline {
         }
         stage('Deploy BDD') {
             steps {
-                sh "chmod +x ./jenkins/run_mssql_container.sh"
+                sh "chmod +x ./cicd/*.sh"
                 sh "./cicd/run_mssql_container.sh"
             }
         }
         stage('Deploy API') {
             steps {
-                sh "chmod +x ./jenkins/run_node_container.sh"
                 sh "./cicd/run_node_container.sh"
             }
         }
