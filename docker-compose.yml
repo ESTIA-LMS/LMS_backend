@@ -5,7 +5,7 @@ networks:
 
 services:
   # DB
-  mssql_service:
+  mssql:
     container_name: mssql_container
     image: mcr.microsoft.com/mssql/server:2019-latest
     ports:
@@ -20,7 +20,7 @@ services:
       - backend
 
   # API server
-  api_service:
+  api:
     container_name: api_container
     image: back_api
     networks:
@@ -31,6 +31,6 @@ services:
     tty: true
     ports:
       - "3000:3000"
-    command: ./bin/wait-for-it.sh -t 60 --strict mssql_service:1433 -- ./bin/start.sh
+    command: ./bin/wait-for-it.sh -t 60 --strict mssql:1433 -- ./bin/start.sh
     depends_on:
-      - mssql_service
+      - mssql

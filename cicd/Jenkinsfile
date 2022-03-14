@@ -1,12 +1,5 @@
 pipeline {
-
-    agent {
-        docker {
-            image 'back_api:latest'
-            args '-p 3000:3000'
-        }
-    }
-
+    agent any
     stages {
         stage('Chekout') {
             steps {
@@ -16,17 +9,18 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Building..'
+                sh 'docker build ./ -t back_api'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './cicd/run_mssql_container'
+                sh './cicd/run_node_container'
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
             }
         }
     }

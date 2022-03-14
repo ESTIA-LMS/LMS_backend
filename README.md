@@ -1,27 +1,32 @@
 
 # DOCKER
 
+docker network create lms_network
+
 ## 1 - Image MSSQL
 
-Pull l'image officielle
+-> Pull de l'image officielle microsft sql server
 docker pull mcr.microsoft.com/mssql/server:2019-latest
 
-Run le container
-docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=motdepasse' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2019-latest
+-> Lancement du container
+sh cicd/run_mssql_container.sh
 
--> entre dans le container
-docker exec mssql_service "bash"
+-> Entre dans le container
+docker exec -it mssql bash
 
--> dans le conatiner execute le script de création de la base si besoin
-/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64 -i /var/opt/mssql/data/script_create_database.txt
+-> Executer un script dans le container (placer le script dans le dossier volume data au préalable)
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64 -i /var/opt/mssql/data/mon_script.sql
+
+-> Executer une requete dans le terminal (USE BASKOI_LMS GO pour changer de base)
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64
 
 ## 2 - Image API nodejs
 
-build image
-docker build ./ -t back_api --no-cache
+-> Build image à partir du Dockerfile
+docker build . -t back_api --no-cache
 
-Test du container (attention le container ne contient pour le moment que les dépendances et pas le code source du projet)
-docker run --rm --name back_api -it back_api /bin/bash
+-> Test du container (attention le container ne contient pour le moment que les dépendances et pas le code source du projet)
+sh cicd/run_node_container.sh
 
 ## 3 - Docker compose -d pour mode détaché et ne pas afficher les logs
 
