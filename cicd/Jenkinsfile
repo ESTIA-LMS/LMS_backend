@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Deploy BDD') {
             steps {
-                sh 'chmod +x ./cicd/*.sh'
+                sh 'chmod +x ./*/*.sh'
                 sh './cicd/run_mssql_container.sh'
                 sh './api/bin/wait-for-it.sh -t 60 --strict mssql:1433 -- ./cicd/run_node_container.sh'
             }
