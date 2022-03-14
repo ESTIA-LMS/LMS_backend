@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy API') {
             steps {
                 sh 'chmod +x ./api/bin/*.sh'
-                sh './api/bin/wait-for-it.sh -t 60 mssql:1433 -- ./cicd/run_node_container.sh'
+                sh './api/bin/wait-for-it.sh -t 20 mssql:1433 -- ./cicd/run_node_container.sh'
             }
         }
         stage('Test') {
