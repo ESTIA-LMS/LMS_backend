@@ -14,8 +14,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh './cicd/run_mssql_container'
-                sh './cicd/run_node_container'
+                sh './cicd/run_mssql_container.sh'
+                sh './cicd/run_node_container.sh'
             }
         }
         stage('Test') {
