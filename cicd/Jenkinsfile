@@ -12,10 +12,12 @@ pipeline {
                 sh 'docker build ./ -t back_api'
             }
         }
-        stage('Deploy') {
+        stage('Deploy BDD') {
             steps {
                 sudo sh "./cicd/run_mssql_container.sh"
             }
+        }
+        stage('Deploy API') {
             {
                 sudo sh "./cicd/run_node_container.sh"
             }
