@@ -14,12 +14,12 @@ pipeline {
         }
         stage('Deploy BDD') {
             steps {
-                sudo sh "./cicd/run_mssql_container.sh"
+                sh "./cicd/run_mssql_container.sh"
             }
         }
         stage('Deploy API') {
             steps {
-                sudo sh "./cicd/run_node_container.sh"
+                sh "./cicd/run_node_container.sh"
             }
         }
         stage('Test') {
