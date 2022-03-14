@@ -26,14 +26,9 @@ pipeline {
                 sh './cicd/run_mssql_container.sh'
             }
         }
-        stage('Deploy API') {
+        stage('TEST API') {
             steps {
                 sh './cicd/run_node_container.sh'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'npm test'
             }
         }
     }
