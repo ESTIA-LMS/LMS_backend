@@ -16,7 +16,7 @@ pipeline {
             steps {
                 sudo sh "./cicd/run_mssql_container.sh"
             }
-            steps {
+            {
                 sudo sh "./cicd/run_node_container.sh"
             }
         }
