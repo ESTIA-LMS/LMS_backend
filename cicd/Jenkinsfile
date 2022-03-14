@@ -20,10 +20,15 @@ pipeline {
                 sh 'docker build ./ -t back_api'
             }
         }
-        stage('Deploy') {
+        stage('Deploy BDD') {
             steps {
                 sh 'chmod +x ./cicd/*.sh'
                 sh './cicd/run_mssql_container.sh'
+                sh './api/bin/wait-for-it.sh -t 60 --strict mssql:1433 -- ./cicd/run_node_container.sh'
+            }
+        }
+        stage('Deploy API') {
+            steps {
                 sh './api/bin/wait-for-it.sh -t 60 --strict mssql:1433 -- ./cicd/run_node_container.sh'
             }
         }
