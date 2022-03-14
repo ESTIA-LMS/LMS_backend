@@ -7,6 +7,13 @@ pipeline {
                 echo 'Checkout Completed'
             }
         }
+        stage('Prepare docker environement') {
+            steps {
+                h 'docker kill $(docker ps -q)'
+                sh 'docker rm $(docker ps -a -q)'
+                sh 'docker network create lms_network || true'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'docker build ./ -t back_api'
@@ -14,8 +21,6 @@ pipeline {
         }
         stage('Deploy BDD') {
             steps {
-                sh 'docker rm $(docker ps -a -q)'
-                sh 'docker network create lms_network || true'
                 sh 'chmod +x ./cicd/*.sh'
                 sh './cicd/run_mssql_container.sh'
             }
