@@ -8,6 +8,12 @@ pipeline {
                 echo 'Checkout Completed'
             }
         }
+        stage('Build') {
+            steps {
+                echo 'Building..'
+                sh 'docker-compose up'
+            }
+        }
         stage('Test') {
             steps {
                 echo 'Testing..'
