@@ -10,7 +10,7 @@ pipeline {
         stage('Prepare docker environement') {
             steps {
                 sh 'docker kill $(docker ps -q) || true'
-                sh 'docker container prune -a -f'
+                sh 'docker container prune -f'
                 sh 'docker image prune -a -f'
                 sh 'docker network create lms_network || true'
             }
