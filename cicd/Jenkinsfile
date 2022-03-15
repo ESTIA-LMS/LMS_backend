@@ -34,18 +34,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-               script {
-                   try {
-                       timeout(time: 10, unit: 'SECONDS') {
-                            echo "Timeout."
-                       }
-                   }
-                    catch (err) {
-                        sh 'docker exec -it back_api /bin/sh -c npm test'
-                        
-                   }
-                } 
-            }
+               sh './api/bin/wait-for-it.sh -t 10 mssql:1433 -- docker exec -it back_api /bin/sh -c npm test'
+            }       
         }
     }
 }
