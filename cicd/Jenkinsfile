@@ -29,12 +29,12 @@ pipeline {
         stage('Deploy API') {
             steps {
                 sh 'chmod +x ./api/bin/*.sh'
-                sh './api/bin/wait-for-it.sh -t 30 mssql:1433 -- nohup sh ./api/bin/start_api.sh&'
+                sh './api/bin/wait-for-it.sh -t 10 mssql:1433 -- nohup sh ./api/bin/start_api.sh&'
             }
         }
         stage('Test') {
             steps {
-               sh './api/bin/wait-for-it.sh -t 60 back_api:3000 -- docker exec back_api /bin/sh -c npm test'
+               sh './api/bin/wait-for-it.sh -t 30 back_api:3000 -- docker exec back_api /bin/sh -c npm test'
             }       
         }
     }
