@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec -it back_api /bin/sh -c 'npm test''
+                sh 'docker exec -it back_api /bin/sh -c npm test'
             }
         }
     }
