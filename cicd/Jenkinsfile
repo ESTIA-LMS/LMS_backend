@@ -11,7 +11,7 @@ pipeline {
             steps {
                 sh 'docker kill $(docker ps -q) || true'
                 sh 'docker container prune -f'
-                sh 'docker image prune -a -f'
+                sh 'docker image prune -f'
                 sh 'docker network create lms_network || true'
             }
         }
