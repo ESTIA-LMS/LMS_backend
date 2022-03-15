@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec -it back_api bash'
+                sh './api/bin/wait-for-it.sh -t 20 mssql:1433 -- docker exec -it back_api bash'
             }
         }
     }
