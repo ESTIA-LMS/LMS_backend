@@ -37,11 +37,12 @@ pipeline {
                script {
                    try {
                        timeout(time: 10, unit: 'SECONDS') {
-                          sh 'docker exec -it back_api /bin/sh -c npm test'
+                            echo "Timeout."
                        }
                    }
                     catch (err) {
-                        echo "Timeout."
+                        sh 'docker exec -it back_api /bin/sh -c npm test'
+                        
                    }
                 } 
             }
