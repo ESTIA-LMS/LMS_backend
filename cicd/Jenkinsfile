@@ -34,7 +34,16 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker exec -it back_api /bin/sh -c npm test'
+               script {
+                   try {
+                       timeout(time: 180, unit: 'SECONDS') {
+                          sh 'docker exec -it back_api /bin/sh -c npm test'
+                       }
+                   }
+                    catch (err) {
+                        echo "Timeout."
+                   }
+                } 
             }
         }
     }
