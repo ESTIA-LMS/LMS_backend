@@ -1,6 +1,5 @@
 # Jenkins for CICD
 
-
 ## 1 - Build jenkins image from jenkins Dockerfile
 
 docker build -t jenkins ./cicd
