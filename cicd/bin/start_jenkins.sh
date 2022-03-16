@@ -1,5 +1,10 @@
-#/bin/sh
+#!/bin/sh
 
+#create network if not exists
+docker network inspect jenkins >/dev/null 2>&1 || \
+    docker network create jenkins
+
+#run this container allow us to use docker commands in jenkins container
 docker run \
   --name jenkins-docker \
   --rm \
@@ -15,6 +20,7 @@ docker run \
   docker:dind \
   --storage-driver overlay2 
 
+#jenkins container where pipeline is executed, you can enter this container executing the command displayed in echo
 docker run --name jenkins --rm --detach \
 --network jenkins --env DOCKER_HOST=tcp://docker:2376 \
 --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 \
