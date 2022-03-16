@@ -1,9 +1,11 @@
 
 # DOCKER
 
+## 1 - Création d'un network pour nos deux containers
+
 docker network create lms_network
 
-## 1 - Image MSSQL
+## 2 - Image MSSQL
 
 -> Pull de l'image officielle microsft sql server
 docker pull mcr.microsoft.com/mssql/server:2019-latest
@@ -20,7 +22,7 @@ docker exec -it mssql bash
 -> Executer une requete dans le terminal (USE BASKOI_LMS GO pour changer de base)
 /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P Motdepasseconforme64
 
-## 2 - Image API nodejs
+## 3 - Image API nodejs
 
 -> Build image à partir du Dockerfile
 docker build . -t back_api --no-cache
@@ -28,14 +30,18 @@ docker build . -t back_api --no-cache
 -> Test du container (attention le container ne contient pour le moment que les dépendances et pas le code source du projet)
 sh cicd/run_node_container.sh
 
-## 3 - Docker compose -d pour mode détaché et ne pas afficher les logs
+## 4 - En développement on peut utiliser docker compose
 
-docker-compose up -d
+-> Lancer le docker
+docker-compose up
+
+-> Supprimer les containers
 docker-compose down
 
-docker-compose exec api_service bash
+-> Entrer dans le container de l'API nodejs
+docker-compose exec api bash
 
-# TEST
+## 5 - Lancer les tests dans le container de l'API nodejs
 
 -> run tout les test dans le dossier test
 npm test
