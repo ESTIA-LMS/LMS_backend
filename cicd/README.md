@@ -69,10 +69,3 @@ In the "Build Configuration" section, select "Jenkinsfile" on mode field and typ
 In the "Scan Pipeline Multibranches Triggers" section you can choose a periodical interval to run your builds if not run manually.
 
 Click save, if the scan is successfull and the Jenkinsfile is found on your remote repository you are done and can launch your first automated build.
-
-
-  ____ ___  _   _  ____ ____      _  _____ ____  
- / ___/ _ \| \ | |/ ___|  _ \    / \|_   _/ ___|
-| |  | | | |  \| | |  _| |_) |  / _ \ | | \___ \
-| |__| |_| | |\  | |_| |  _ <  / ___ \| |  ___) |
- \____\___/|_| \_|\____|_| \_\/_/   \_\_| |____/
