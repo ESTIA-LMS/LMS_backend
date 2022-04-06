@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Chekout') {
+        stage('GitHub chekout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [], userRemoteConfigs: [[credentialsId: 'my-github-account', url: 'https://github.com/ESTIA-LMS/LMS_backend']]])
                 echo 'Checkout Completed'
@@ -18,15 +18,16 @@ pipeline {
         stage('Build API image') {
             steps {
                 sh 'docker build ./ -t back_api'
+                sh 'docker rmi $(docker images -f "dangling=true" -q)'
             }
         }
-        stage('Deploy BDD') {
+        stage('Build and deploy SQL Server') {
             steps {
                 sh 'chmod +x ./cicd/*.sh'
                 sh './cicd/run_mssql_container.sh'
             }
         }
-        stage('Deploy API') {
+        stage('Deploy API container') {
             steps {
                 sh 'chmod +x ./api/bin/*.sh'
                 sh './api/bin/wait-for-it.sh -t 10 mssql:1433 -- nohup sh ./api/bin/start_api.sh&'
