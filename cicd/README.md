@@ -6,7 +6,7 @@ docker build -t myjenkins ./cicd
 
 ## 2 - Start Jenkins using docker
 
--> You can start jenkins container using the script in the /cicd/bin directory
+You can start jenkins container using the script in the /cicd/bin directory
 sh ./cicd/bin/start_jenkins.sh
 
 ## 3 - Set up Jenkins config
@@ -69,3 +69,11 @@ In the "Build Configuration" section, select "Jenkinsfile" on mode field and typ
 In the "Scan Pipeline Multibranches Triggers" section you can choose a periodical interval to run your builds if not run manually.
 
 Click save, if the scan is successfull and the Jenkinsfile is found on your remote repository you are done and can launch your first automated build.
+
+## 5 - Using jenkins
+
+Once you have completed all previous all you have to do to restart jenkins is executing the start_jenkins script
+sh ./cicd/bin/start_jenkins.sh
+
+You can then enter the jenkins container where the build / deploy happen using
+docker exec -it jenkins /bin/bash

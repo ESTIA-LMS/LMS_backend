@@ -119,12 +119,10 @@ describe('GET /users/id', function(){
        
         /*Verif sur la date de création*/
         const currentDate = new Date()
-        let dateString = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" +  currentDate.getDate() 
+        let dateString = currentDate.getFullYear() + "-" + 
+                ((currentDate.getMonth() + 1).length < 2 ? '0' + (currentDate.getMonth() + 1) : (currentDate.getMonth() + 1))
+                 + "-" +  (currentDate.getDate().length < 2 ? '0' + currentDate.getDate() : currentDate.getDate())
        
-        if (dateString.length < 10) {
-            dateString = dateString.substring(0,5) + '0' + dateString.substring(5,10)  //Ajout du 0 avant le mois si besoin
-        }
-
         user.Users_Create_Date.should.be.ok
         user.Users_Create_Date.should.be.String()
         user.Users_Create_Date.substring(0,10).should.equals(dateString)
