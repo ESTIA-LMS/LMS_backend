@@ -31,6 +31,6 @@ services:
     tty: true
     ports:
       - "3000:3000"
-    command: ./bin/wait-for-it.sh -t 60 --strict mssql:1433 -- ./bin/start.sh
+    command: ./bin/wait-for-it.sh -t 60 --strict mssql:1433 -- npm run start
     depends_on:
       - mssql
