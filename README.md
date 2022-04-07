@@ -28,7 +28,7 @@ docker exec -it mssql bash
 docker build . -t back_api --no-cache
 
 -> Test du container (attention le container ne contient pour le moment que les dépendances et pas le code source du projet)
-sh cicd/run_node_container.sh
+sh cicd/bin/run_node_container.sh
 
 ## 4 - En développement on peut utiliser docker compose
 

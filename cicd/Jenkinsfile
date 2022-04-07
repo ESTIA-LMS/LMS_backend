@@ -23,7 +23,7 @@ pipeline {
         stage('Build and deploy SQL Server') {
             steps {
                 sh 'chmod +x ./cicd/*.sh'
-                sh './cicd/run_mssql_container.sh'
+                sh './cicd/bin/run_mssql_container.sh'
             }
         }
         stage('Deploy API container') {
