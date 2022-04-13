@@ -5,7 +5,12 @@ const bcrypt = require('bcrypt')
 const { QueryTypes } = require('sequelize')
 const User = require('../models/Users')
 
-const ctrl = {}
+/**
+ * Controller pour la route utilisateur.
+ * @class user_ctrl User controller
+ */
+
+const user_ctrl = {}
 
 /**
  * Display all users. 
@@ -14,7 +19,8 @@ const ctrl = {}
  * @param  {Response} res
  * @param  {function} next
  */
-ctrl.getAll = function getAll(req, res, next) {
+
+ user_ctrl.getAll = function getAll(req, res, next) {
   User.sequelize.query(`SELECT * FROM USERS order by Users_Create_Date DESC`,
     {
       type: QueryTypes.SELECT
@@ -32,7 +38,7 @@ ctrl.getAll = function getAll(req, res, next) {
  * @param  {Response} res
  * @param  {function} next
  */
- ctrl.create = function create(req, res, next) {
+ user_ctrl.create = function create(req, res, next) {
 
   let {nom, prenom, email, mdp, mdp1} = req.body
 
@@ -68,7 +74,7 @@ ctrl.getAll = function getAll(req, res, next) {
  * @param  {Response} res
  * @param  {function} next
  */
-ctrl.destroy = async function destroy(req, res, next) {
+ user_ctrl.destroy = async function destroy(req, res, next) {
 
     // Vérification de l'id utilisateur
     const id = parseInt(req.params.id)
@@ -93,7 +99,7 @@ ctrl.destroy = async function destroy(req, res, next) {
  * @param  {Response} res
  * @param  {function} next
  */
-ctrl.getOne = function getOne(req, res, next) {
+ user_ctrl.getOne = function getOne(req, res, next) {
   User
     .findOne({where:{Users_Id : req.params.id}, raw: true})
     .then(user => {
@@ -107,4 +113,9 @@ ctrl.getOne = function getOne(req, res, next) {
   
 }
 
-module.exports = ctrl
+/**
+ * Module pour le controller user.
+ * @module user/controller
+ */
+
+module.exports = user_ctrl

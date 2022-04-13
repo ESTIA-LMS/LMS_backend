@@ -1,20 +1,25 @@
-
+ 
 const httpError = require('http-errors')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/Users');
-const ctrl = {}
-
 
 /**
-* Connexion.
-*
-* @param  {Request}  req
-* @param  {Response} res
-* @param  {function} next
+ * Controller pour l'authentification.
+ * @class auth_ctrl Authentication controller
+ */
+
+ const auth_ctrl = {}
+
+/**
+* Méthode pour la connexion / authentification de l'utilisateur.
+* @param  {Request}  req Argument de requête HTTP à la fonction
+* @param  {Response} res Argument de réponse HTTP à la fonction
+* @param  {function} next Argument d'appel à la fonction middleware suivante dans l’application.
 */
-ctrl.login = function login(req,res,next){
+
+auth_ctrl.login = function login(req,res,next){
 
     let {email, mdp} = req.body
 
@@ -55,13 +60,13 @@ ctrl.login = function login(req,res,next){
 
 
 /**
- * Update password of an user.
- *
- * @param  {Request}  req
- * @param  {Response} res
- * @param  {function} next
- */
- ctrl.updateMdp = function update(req, res, next) {
+* Méthode pour update le mot de passe utilisateur.
+* @param  {Request}  req Argument de requête HTTP à la fonction
+* @param  {Response} res Argument de réponse HTTP à la fonction
+* @param  {function} next Argument d'appel à la fonction middleware suivante dans l’application.
+*/
+
+auth_ctrl.updateMdp = function update(req, res, next) {
 
     const id = req.params.id
     const {oldPwd, newPwd, newPwdConf} = req.body
@@ -104,6 +109,9 @@ ctrl.login = function login(req,res,next){
 
 
 
+/**
+ * Module pour le controller d'authentification.
+ * @module auth/controller
+ */
 
-
-module.exports = ctrl
+module.exports = auth_ctrl

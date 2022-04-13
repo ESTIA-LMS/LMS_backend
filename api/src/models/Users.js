@@ -64,4 +64,8 @@ const model = sequelize.define('Users', {
     ]
   })
 
+/**
+ * Module pour le model user.
+ * @module user/model
+ */
 module.exports = model 
