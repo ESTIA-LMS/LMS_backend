@@ -2,12 +2,15 @@
 
 ## 1 - Build jenkins image from jenkins Dockerfile
 
-docker build -t myjenkins ./cicd
+Build a custom image with the official jenkins image using the dockerfile located in the cicd folder.
+
+````docker build -t myjenkins ./cicd````
 
 ## 2 - Start Jenkins using docker
 
-You can start jenkins container using the script in the /cicd/bin directory
-sh ./cicd/bin/start_jenkins.sh
+You can start jenkins container using the script in the /cicd/bin directory. This script execute two containers with an associated network in order to run docker commands inside jenkins container:
+
+````sh ./cicd/bin/start_jenkins.sh````
 
 ## 3 - Set up Jenkins config
 
@@ -16,7 +19,8 @@ sh ./cicd/bin/start_jenkins.sh
 Browse to <http://localhost:8080> and wait until the Unlock Jenkins page appears.
 
 To unlock jekins copy the intial admin password that can be find in the container using the following command:
-docker container exec -it jenkins bash 'sudo cat /var/lib/jenkins/secrets/initialAdminPassword'
+
+````docker container exec -it jenkins bash 'sudo cat /var/lib/jenkins/secrets/initialAdminPassword'````
 
 ### 3.2 - Customize Jenkins with plugins
 
@@ -62,7 +66,8 @@ Choose a display name (ex: main_pipeline)
 
 In branch source click "add source" and select GitHub.
 In the credential dropdown select the credentials you just created in step 3.4.
-In the "Repository HTTPS URL" put the url of the github repository <https://github.com/ESTIA-LMS/LMS_backend>
+In the "Repository HTTPS URL" specify the url of the github repository
+ <https://github.com/ESTIA-LMS/LMS_backend>
 
 In the "Build Configuration" section, select "Jenkinsfile" on mode field and type "cicd/Jenkinsfile" under Script path.
 
@@ -72,8 +77,10 @@ Click save, if the scan is successfull and the Jenkinsfile is found on your remo
 
 ## 5 - Using jenkins
 
-Once you have completed all previous all you have to do to restart jenkins is executing the start_jenkins script
-sh ./cicd/bin/start_jenkins.sh
+Once you have completed all previous steps you can stop jenkins containers and restart jenkins is executing the start_jenkins script
+
+````sh ./cicd/bin/start_jenkins.sh````
 
 You can then enter the jenkins container where the build / deploy happen using
-docker exec -it jenkins /bin/bash
+
+````docker exec -it jenkins /bin/bash````

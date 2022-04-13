@@ -1,0 +1,17 @@
+{   
+    "recurseDepth": 10,
+    "source": {
+        "include": ["./src/"],
+        "includePattern": ".+\\.js(doc|x)?$",
+        "excludePattern": ""
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": false
+    },
+    "opts": {
+        "recurse": true,
+        "destination": "../docs/JSdoc"
+    }
+}
