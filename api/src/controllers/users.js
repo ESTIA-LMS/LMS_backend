@@ -1,3 +1,7 @@
+/**
+ * Module pour le controller user. {@link class:user_ctrl}
+ * @module user/controller
+ */
 'use strict'
 
 const httpError = require('http-errors')
@@ -113,9 +117,6 @@ const user_ctrl = {}
   
 }
 
-/**
- * Module pour le controller user.
- * @module user/controller
- */
+
 
 module.exports = user_ctrl

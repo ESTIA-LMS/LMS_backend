@@ -2,7 +2,7 @@
  * @file server.js is the root file for this project.
  */
 
-/** imports modules*/
+/* imports modules*/
 const express = require('express')
 const cors = require('cors')
 

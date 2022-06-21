@@ -1,4 +1,8 @@
- 
+ /**
+ * Module pour le controller d'authentification. {@link class:auth_ctrl}
+ * @module auth/controller
+ */
+
 const httpError = require('http-errors')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -106,12 +110,5 @@ auth_ctrl.updateMdp = function update(req, res, next) {
     })
     .catch(err => res.status(401).json({message: 'Erreur recherche utilisateur'}))
 }
-
-
-
-/**
- * Module pour le controller d'authentification.
- * @module auth/controller
- */
 
 module.exports = auth_ctrl

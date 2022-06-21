@@ -22,7 +22,7 @@ services:
   # API server
   api:
     container_name: api_container
-    image: back_api
+    image: joelbiz/lms_api_hub:1
     networks:
       - backend
     volumes:

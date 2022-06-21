@@ -1,6 +1,6 @@
 #
 
-## Ce projet a été développé dans le cadre de formation CQP Développeur nouvelles technologies
+Ce projet a été développé dans le cadre de formation CQP Développeur nouvelles technologies
 
 Version : 0.1
 
